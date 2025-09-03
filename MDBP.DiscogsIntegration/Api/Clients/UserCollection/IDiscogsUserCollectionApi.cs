@@ -1,6 +1,6 @@
 ﻿using MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
 
-namespace MusicDBPlayground.DiscogsIntegration.Clients.Interfaces;
+namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.UserCollection;
 
 public interface IDiscogsUserCollectionApi
 {

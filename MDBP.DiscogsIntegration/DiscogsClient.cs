@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
+using MusicDBPlayground.DiscogsIntegration.Api.Clients;
 using MusicDBPlayground.DiscogsIntegration.Clients;
+using MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
 using MusicDBPlayground.DiscogsIntegration.Data;
 using MusicDBPlayground.DiscogsIntegration.Security;
 using MusicDBPlayground.DiscogsIntegration.Services;
@@ -19,6 +21,7 @@ public class DiscogsClient
 
     public DiscogsClient(HttpClient httpClient)
     {
+        httpClient.BaseAddress = new Uri("https://api.discogs.com");
         _authClient = new DiscogsOAuthClient(httpClient);
         _apiClient = new DiscogsApiClient(httpClient, _authClient);
         Console.WriteLine($"Working directory: {Environment.CurrentDirectory}");
@@ -77,4 +80,11 @@ public class DiscogsClient
 
     public async Task<string> GetUserIdentityAsync()
         => await _apiClient.GetIdentityAsync();
+    
+    public async Task<Release?> GetReleaseAsync(int releaseId)
+    {
+        var release = await _apiClient.Database.GetReleaseAsync(releaseId);
+        return release;
+    }
+    
 }

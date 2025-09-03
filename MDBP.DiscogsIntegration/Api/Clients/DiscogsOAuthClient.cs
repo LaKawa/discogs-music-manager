@@ -3,7 +3,7 @@ using System.Net;
 using OAuth.OAuth1;
 using OAuth.OAuth1.Models;
 
-namespace MusicDBPlayground.DiscogsIntegration.Clients;
+namespace MusicDBPlayground.DiscogsIntegration.Api.Clients;
 
 public class DiscogsOAuthClient : IDisposable
 {
