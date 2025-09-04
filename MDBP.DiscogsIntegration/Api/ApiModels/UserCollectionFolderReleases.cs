@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
+namespace MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 
 // TODO this is almost the same as UserCollectionReleasesResponse.cs - consolidate!
 

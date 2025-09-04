@@ -1,7 +1,8 @@
 ﻿// csharp
+
 using System.Text.Json.Serialization;
 
-namespace MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
+namespace MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 
 public sealed record UserCollectionValue
 {

@@ -1,4 +1,4 @@
-﻿namespace MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
+﻿namespace MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 
 // Request container for /database/search
 public sealed class SearchRequest

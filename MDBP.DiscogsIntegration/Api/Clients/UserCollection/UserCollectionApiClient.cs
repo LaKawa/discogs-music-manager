@@ -1,5 +1,5 @@
-﻿using MusicDBPlayground.DiscogsIntegration.Clients;
-using MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
+﻿using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
+using MusicDBPlayground.DiscogsIntegration.Clients;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.UserCollection;
 

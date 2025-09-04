@@ -1,4 +1,4 @@
-﻿using MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
+﻿using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.Database;
 

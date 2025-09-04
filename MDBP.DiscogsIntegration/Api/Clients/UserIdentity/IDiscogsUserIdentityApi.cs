@@ -1,6 +1,6 @@
-﻿using MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
+﻿using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 
-namespace MusicDBPlayground.DiscogsIntegration.Clients.Interfaces;
+namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.UserIdentity;
 
 public interface IDiscogsUserIdentityApi
 {
@@ -10,7 +10,7 @@ public interface IDiscogsUserIdentityApi
     /// A task that represents the asynchronous operation. The task's result contains
     /// a UserIdentity object with the user's details if successful, or null if the operation fails.
     /// </returns>
-    Task<UserIdentity?> GetUserIdentityAsync(CancellationToken? cancellationToken = default);
+    Task<ApiModels.UserIdentity?> GetUserIdentityAsync(CancellationToken cancellationToken = default);
 
     /// GET. Retrieves the profile details of a specified user from the Discogs API.
     /// Requires a valid OAuth signature for authorized access.

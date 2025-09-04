@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
+using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 using MusicDBPlayground.DiscogsIntegration.Api.Clients;
 using MusicDBPlayground.DiscogsIntegration.Clients;
-using MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
 using MusicDBPlayground.DiscogsIntegration.Data;
 using MusicDBPlayground.DiscogsIntegration.Security;
 using MusicDBPlayground.DiscogsIntegration.Services;
@@ -78,8 +78,8 @@ public class DiscogsClient
         Console.WriteLine("Saved changes to Database!");
     }
 
-    public async Task<string> GetUserIdentityAsync()
-        => await _apiClient.GetIdentityAsync();
+    public async Task<UserIdentity?> GetUserIdentityAsync()
+        => await _apiClient.UserIdentity.GetUserIdentityAsync();
     
     public async Task<Release?> GetReleaseAsync(int releaseId)
     {

@@ -1,7 +1,7 @@
 ﻿using MusicDBPlayground.DiscogsIntegration.Clients;
-using MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.Database;
 

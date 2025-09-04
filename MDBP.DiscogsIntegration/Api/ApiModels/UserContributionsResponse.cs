@@ -1,7 +1,6 @@
-﻿namespace MusicDBPlayground.DiscogsIntegration.Clients.ApiModels;
-using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+
+namespace MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 
 public sealed record UserContributionsResponse
 {

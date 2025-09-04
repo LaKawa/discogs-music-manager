@@ -1,5 +1,6 @@
 ﻿using MusicDBPlayground.DiscogsIntegration.Api.Clients.Database;
 using MusicDBPlayground.DiscogsIntegration.Api.Clients.UserCollection;
+using MusicDBPlayground.DiscogsIntegration.Api.Clients.UserIdentity;
 using MusicDBPlayground.DiscogsIntegration.Clients.Interfaces;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients;
