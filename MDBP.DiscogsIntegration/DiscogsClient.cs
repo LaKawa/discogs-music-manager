@@ -86,5 +86,8 @@ public class DiscogsClient
         var release = await _apiClient.Database.GetReleaseAsync(releaseId);
         return release;
     }
-    
+
+    public async Task<UserCollectionFolders?> GetUserCollectionFoldersAsync()
+        => await _apiClient.UserCollection.GetUserCollectionFoldersAsync("LaKawa");
+
 }

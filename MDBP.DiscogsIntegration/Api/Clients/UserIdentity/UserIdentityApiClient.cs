@@ -1,27 +1,17 @@
 ﻿using System.Text.Json;
 using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
+using MusicDBPlayground.DiscogsIntegration.Services;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.UserIdentity;
 
-public class UserIdentityApiClient(HttpClient httpClient, DiscogsOAuthClient oAuthClient) : IDiscogsUserIdentityApi
+public class UserIdentityApiClient(HttpService httpService) : IDiscogsUserIdentityApi
 {
-    private HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-    private DiscogsOAuthClient _oAuthClient = oAuthClient ?? throw new ArgumentNullException(nameof(oAuthClient));
-
+    private readonly HttpService _httpService = httpService ?? throw new ArgumentNullException(nameof(httpService));
 
     public async Task<ApiModels.UserIdentity?> GetUserIdentityAsync(CancellationToken cancellationToken = default)
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, "/oauth/identity");
-        
-        _oAuthClient.SignRequest(request);
-        
-        var response = await _httpClient.SendAsync(request, cancellationToken);
-        response.EnsureSuccessStatusCode();
-        
-        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        var identity = await JsonSerializer.DeserializeAsync<ApiModels.UserIdentity>(stream, cancellationToken: cancellationToken);
-        
-        return identity;
+        const string path = "/oauth/identity";
+        return await _httpService.SendGetAsync<ApiModels.UserIdentity?>(path, cancellationToken);
     }
 
     public Task<UserProfile?> GetUserProfileAsync(string username, CancellationToken cancellationToken = default)

@@ -2,31 +2,20 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
+using MusicDBPlayground.DiscogsIntegration.Services;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.Database;
 
-public class DatabaseApiClient(HttpClient httpClient, DiscogsOAuthClient oAuthClient) : IDiscogsDatabaseApi
+public class DatabaseApiClient(HttpService httpService) : IDiscogsDatabaseApi
 {
-    private HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-    private DiscogsOAuthClient _oAuthClient = oAuthClient ?? throw new ArgumentNullException(nameof(oAuthClient)); 
-    
-    
+    private readonly HttpService _httpService = httpService ?? throw new ArgumentNullException(nameof(httpService));
     public async Task<Release?> GetReleaseAsync(int releaseId, string? currAbbr = null, CancellationToken cancellationToken = default)
     {
         var path = $"/releases/{releaseId}";
         if (!string.IsNullOrEmpty(currAbbr))
             path += $"?curr_abbr={currAbbr}";
-        
-        var request = new HttpRequestMessage(HttpMethod.Get, path);
-        _oAuthClient.SignRequest(request);
-        
-        var response = await _httpClient.SendAsync(request, cancellationToken);
-        response.EnsureSuccessStatusCode();
 
-        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        var release = await JsonSerializer.DeserializeAsync<Release>(stream, cancellationToken: cancellationToken);
-
-        return release; 
+        return await _httpService.SendGetAsync<Release?>(path, cancellationToken);
     }
 
     public Task<ReleaseStats?> GetReleaseStatsAsync(int releaseId, CancellationToken cancellationToken = default)

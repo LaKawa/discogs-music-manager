@@ -19,7 +19,7 @@ public interface IDiscogsUserCollectionApi
     /// A task representing the asynchronous operation. The task result contains the user's collection folders
     /// or null if the folders cannot be retrieved.
     /// </returns>
-    Task<UserCollectionFolders?> GetUserCollectionFoldersAsync(string username, CancellationToken cancellationToken);
+    Task<UserCollectionFolders?> GetUserCollectionFoldersAsync(string username, CancellationToken cancellationToken = default);
 
     /// POST. Creates a new collection folder for a specified user on Discogs.
     /// The folder will have a unique ID and name, and it can store individual releases organized by the user.
@@ -39,7 +39,7 @@ public interface IDiscogsUserCollectionApi
     /// or null if the folder could not be created.
     /// </returns>
     Task<UserCollectionFolder?> CreateUserCollectionFolderAsync(string username, string? folderName,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 
 
     /// GET. Retrieves a specific collection folder for a specified user on Discogs.
@@ -61,7 +61,7 @@ public interface IDiscogsUserCollectionApi
     /// or null if the folder cannot be retrieved.
     /// </returns>
     Task<UserCollectionFolder?> GetUserCollectionFolderAsync(string username, int folderId,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 
     /// POST. Updates the details of a user's specific collection folder on Discogs.
     /// This operation primarily allows changing folder properties such as its name.
@@ -81,7 +81,7 @@ public interface IDiscogsUserCollectionApi
     /// or null if the update operation fails.
     /// </returns>
     Task<UserCollectionFolder?> UpdateUserCollectionFolderAsync(string username, int folderId,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 
     /// DELETE. Deletes a specified collection folder for a user on Discogs.
     /// Only custom folders can be deleted. Default folders such as "All" and "Uncategorized" cannot be removed.
@@ -100,7 +100,7 @@ public interface IDiscogsUserCollectionApi
     /// A task representing the asynchronous operation. The task completes when the folder is successfully deleted
     /// or if the deletion fails.
     /// </returns>
-    Task DeleteUserCollectionFolderAsync(string username, int folderId, CancellationToken cancellationToken);
+    Task DeleteUserCollectionFolderAsync(string username, int folderId, CancellationToken cancellationToken = default);
 
     /// GET. Retrieves all collection items for a specified user and release ID on Discogs.
     /// This allows querying specific items tied to a release across various folders.
@@ -119,7 +119,7 @@ public interface IDiscogsUserCollectionApi
     /// specified release or null if the items cannot be retrieved.
     /// </returns>
     Task<UserCollectionReleasesResponse?> GetCollectionItemsByReleaseAsync(string username, int releaseId,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken = default);
 
     /// GET. Retrieves the collection items within a specific folder for a specified user on Discogs.
     /// Allows sorting and pagination of the results.

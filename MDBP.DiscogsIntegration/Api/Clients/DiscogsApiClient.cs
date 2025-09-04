@@ -3,6 +3,7 @@ using MusicDBPlayground.DiscogsIntegration.Api.Clients.UserCollection;
 using MusicDBPlayground.DiscogsIntegration.Api.Clients.UserIdentity;
 using MusicDBPlayground.DiscogsIntegration.Clients;
 using MusicDBPlayground.DiscogsIntegration.Clients.Interfaces;
+using MusicDBPlayground.DiscogsIntegration.Services;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients;
 
@@ -10,6 +11,7 @@ public class DiscogsApiClient : IDiscogsApi
 {
     private HttpClient _httpClient;
     private DiscogsOAuthClient _oAuthClient;
+    private HttpService _httpService;
     
     public IDiscogsDatabaseApi Database { get; }
     public IDiscogsInventoryExportApi InventoryExport { get; }
@@ -26,9 +28,11 @@ public class DiscogsApiClient : IDiscogsApi
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _oAuthClient = oAuthClient ?? throw new ArgumentNullException(nameof(oAuthClient));
         
-        Database = new DatabaseApiClient(_httpClient, _oAuthClient);
-        UserIdentity = new UserIdentityApiClient(_httpClient, _oAuthClient);
-        UserCollection = new UserCollectionApiClient(_httpClient, _oAuthClient);
+        _httpService = new HttpService(httpClient, _oAuthClient);
+        
+        Database = new DatabaseApiClient(_httpService);
+        UserIdentity = new UserIdentityApiClient(_httpService);
+        UserCollection = new UserCollectionApiClient(_httpService);
         
         
         //_httpClient.DefaultRequestHeaders.Add 

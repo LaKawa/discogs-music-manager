@@ -1,15 +1,17 @@
-﻿using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
+﻿using System.Text.Json;
+using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 using MusicDBPlayground.DiscogsIntegration.Clients;
+using MusicDBPlayground.DiscogsIntegration.Services;
 
 namespace MusicDBPlayground.DiscogsIntegration.Api.Clients.UserCollection;
 
-public class UserCollectionApiClient(HttpClient httpClient, DiscogsOAuthClient oAuthClient) : IDiscogsUserCollectionApi
+public class UserCollectionApiClient(HttpService httpService) : IDiscogsUserCollectionApi
 {
-    private HttpClient _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-    private DiscogsOAuthClient _oAuthClient = oAuthClient ?? throw new ArgumentNullException(nameof(oAuthClient));
-    public Task<UserCollectionFolders?> GetUserCollectionFoldersAsync(string username, CancellationToken cancellationToken)
+    private readonly HttpService _httpService = httpService ?? throw new ArgumentNullException(nameof(httpService));
+    public async Task<UserCollectionFolders?> GetUserCollectionFoldersAsync(string username, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var path = "/users/" + username + "/collection/folders";
+        return await _httpService.SendGetAsync<UserCollectionFolders?>(path, cancellationToken);
     }
 
     public Task<UserCollectionFolder?> CreateUserCollectionFolderAsync(string username, string? folderName, CancellationToken cancellationToken)

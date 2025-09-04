@@ -10,12 +10,18 @@ var discogsClient = new DiscogsClient(client);
 await discogsClient.AuthenticateAsync();
 
 var identity = await discogsClient.GetUserIdentityAsync();
-var release = await discogsClient.GetReleaseAsync(2);
 Console.WriteLine(identity);
-Console.WriteLine(release);
+Console.ReadLine();
 
+var release = await discogsClient.GetReleaseAsync(2);
 var json = JsonSerializer.Serialize(release, new JsonSerializerOptions { WriteIndented = true });
 Console.WriteLine(json);
+
+var folders = await discogsClient.GetUserCollectionFoldersAsync();
+var json2 = JsonSerializer.Serialize(folders, new JsonSerializerOptions { WriteIndented = true });
+Console.WriteLine(json2);
+
+
 
 
 Console.ReadLine();
