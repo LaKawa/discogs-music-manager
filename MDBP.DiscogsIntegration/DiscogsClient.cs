@@ -2,7 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using MusicDBPlayground.DiscogsIntegration.Api.ApiModels;
 using MusicDBPlayground.DiscogsIntegration.Api.Clients;
+using MusicDBPlayground.DiscogsIntegration.Api.Clients.Database;
+using MusicDBPlayground.DiscogsIntegration.Api.Clients.UserCollection;
+using MusicDBPlayground.DiscogsIntegration.Api.Clients.UserIdentity;
 using MusicDBPlayground.DiscogsIntegration.Clients;
+using MusicDBPlayground.DiscogsIntegration.Clients.Interfaces;
 using MusicDBPlayground.DiscogsIntegration.Data;
 using MusicDBPlayground.DiscogsIntegration.Security;
 using MusicDBPlayground.DiscogsIntegration.Services;
@@ -10,25 +14,41 @@ using OAuth.OAuth1.Models;
 
 namespace MusicDBPlayground.DiscogsIntegration;
 
-public class DiscogsClient
+public class DiscogsClient : IDiscogsApi
 {
     private readonly DiscogsOAuthClient _authClient;
-    private readonly DiscogsApiClient _apiClient;
     private readonly EncryptionService _encryptionService;
     private readonly DiscogsDbContext _db;
     private readonly LocalKeyProvider _keyProvider;
+    
+    private HttpClient _httpClient;
+    private DiscogsOAuthClient _oAuthClient;
+    private HttpService _httpService;
+    
+    public IDiscogsDatabaseApi Database { get; }
+    public IDiscogsInventoryExportApi InventoryExport { get; }
+    public IDiscogsInventoryUploadApi InventoryUpload { get; }
+    public IDiscogsMarketplaceApi Marketplace { get; }
+    public IDiscogsUserIdentityApi UserIdentity { get; }
+    public IDiscogsUserListsApi UserLists { get; }
+    public IDiscogsUserWantlistApi UserWantlist { get; }
+    public IDiscogsUserCollectionApi UserCollection { get; }
 
 
     public DiscogsClient(HttpClient httpClient)
     {
         httpClient.BaseAddress = new Uri("https://api.discogs.com");
         _authClient = new DiscogsOAuthClient(httpClient);
-        _apiClient = new DiscogsApiClient(httpClient, _authClient);
+        _httpService = new HttpService(httpClient, _authClient);
         Console.WriteLine($"Working directory: {Environment.CurrentDirectory}");
         _db = new DiscogsDbContext();
         _encryptionService = new EncryptionService();
         // ReSharper disable once JoinDeclarationAndInitializer
         ISecureStorage secureStorage;
+        
+        Database = new DatabaseApiClient(_httpService);
+        UserIdentity = new UserIdentityApiClient(_httpService);
+        UserCollection = new UserCollectionApiClient(_httpService);
 
 #if NET9_0_WINDOWS
         secureStorage = new WindowsSecureStorage();
@@ -77,17 +97,4 @@ public class DiscogsClient
         await _db.SaveChangesAsync();
         Console.WriteLine("Saved changes to Database!");
     }
-
-    public async Task<UserIdentity?> GetUserIdentityAsync()
-        => await _apiClient.UserIdentity.GetUserIdentityAsync();
-    
-    public async Task<Release?> GetReleaseAsync(int releaseId)
-    {
-        var release = await _apiClient.Database.GetReleaseAsync(releaseId);
-        return release;
-    }
-
-    public async Task<UserCollectionFolders?> GetUserCollectionFoldersAsync()
-        => await _apiClient.UserCollection.GetUserCollectionFoldersAsync("LaKawa");
-
 }

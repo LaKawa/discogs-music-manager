@@ -9,15 +9,15 @@ using var client = new HttpClient();
 var discogsClient = new DiscogsClient(client);
 await discogsClient.AuthenticateAsync();
 
-var identity = await discogsClient.GetUserIdentityAsync();
+var identity = await discogsClient.UserIdentity.GetUserIdentityAsync();
 Console.WriteLine(identity);
 Console.ReadLine();
 
-var release = await discogsClient.GetReleaseAsync(2);
+var release = await discogsClient.Database.GetReleaseAsync(2);
 var json = JsonSerializer.Serialize(release, new JsonSerializerOptions { WriteIndented = true });
 Console.WriteLine(json);
 
-var folders = await discogsClient.GetUserCollectionFoldersAsync();
+var folders = await discogsClient.UserCollection.GetUserCollectionFoldersAsync("LaKawa");
 var json2 = JsonSerializer.Serialize(folders, new JsonSerializerOptions { WriteIndented = true });
 Console.WriteLine(json2);
 

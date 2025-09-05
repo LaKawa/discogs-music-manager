@@ -11,7 +11,7 @@ public class UserCollectionApiClient(HttpService httpService) : IDiscogsUserColl
     public async Task<UserCollectionFolders?> GetUserCollectionFoldersAsync(string username, CancellationToken cancellationToken)
     {
         var path = "/users/" + username + "/collection/folders";
-        return await _httpService.SendGetAsync<UserCollectionFolders?>(path, cancellationToken);
+        return await _httpService.GetAndDeserializeAsync<UserCollectionFolders?>(path, cancellationToken);
     }
 
     public Task<UserCollectionFolder?> CreateUserCollectionFolderAsync(string username, string? folderName, CancellationToken cancellationToken)
@@ -42,6 +42,8 @@ public class UserCollectionApiClient(HttpService httpService) : IDiscogsUserColl
     public Task<UserCollectionFolderReleases?> GetCollectionItemsByFolderAsync(string username, long folderId, string? sort = null, string? sortOrder = null,
         int? page = null, int? perPage = null, CancellationToken cancellationToken = default)
     {
+        
+        
         throw new NotImplementedException();
     }
 

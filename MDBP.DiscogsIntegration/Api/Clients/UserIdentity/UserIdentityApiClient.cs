@@ -11,7 +11,7 @@ public class UserIdentityApiClient(HttpService httpService) : IDiscogsUserIdenti
     public async Task<ApiModels.UserIdentity?> GetUserIdentityAsync(CancellationToken cancellationToken = default)
     {
         const string path = "/oauth/identity";
-        return await _httpService.SendGetAsync<ApiModels.UserIdentity?>(path, cancellationToken);
+        return await _httpService.GetAndDeserializeAsync<ApiModels.UserIdentity?>(path, cancellationToken);
     }
 
     public Task<UserProfile?> GetUserProfileAsync(string username, CancellationToken cancellationToken = default)

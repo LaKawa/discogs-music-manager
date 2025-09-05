@@ -15,7 +15,7 @@ public class DatabaseApiClient(HttpService httpService) : IDiscogsDatabaseApi
         if (!string.IsNullOrEmpty(currAbbr))
             path += $"?curr_abbr={currAbbr}";
 
-        return await _httpService.SendGetAsync<Release?>(path, cancellationToken);
+        return await _httpService.GetAndDeserializeAsync<Release?>(path, cancellationToken);
     }
 
     public Task<ReleaseStats?> GetReleaseStatsAsync(int releaseId, CancellationToken cancellationToken = default)
