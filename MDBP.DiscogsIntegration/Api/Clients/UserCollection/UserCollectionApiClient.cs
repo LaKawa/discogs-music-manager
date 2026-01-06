@@ -39,12 +39,21 @@ public class UserCollectionApiClient(HttpService httpService) : IDiscogsUserColl
         throw new NotImplementedException();
     }
 
-    public Task<UserCollectionFolderReleases?> GetCollectionItemsByFolderAsync(string username, long folderId, string? sort = null, string? sortOrder = null,
-        int? page = null, int? perPage = null, CancellationToken cancellationToken = default)
+    public async Task<UserCollectionFolderReleases?> GetCollectionItemsByFolderAsync(string username, long folderId, string? sort = null, string? sortOrder = null,
+        int? page = null, int? perPage = 50, CancellationToken cancellationToken = default)
     {
+        var path = $"/users/{username}/collection/folders/{folderId}/releases";
         
+        if(page == null) path += "?page=1";
+        else path += $"?page={page}";
+        path += $"&per_page={perPage}";
         
-        throw new NotImplementedException();
+        if(!string.IsNullOrEmpty(sort))
+            path += $"&sort={sort}";
+        if(!string.IsNullOrEmpty(sortOrder))
+            path += $"&sort_order={sortOrder}";
+
+        return await _httpService.GetAndDeserializeAsync<UserCollectionFolderReleases?>(path, cancellationToken);
     }
 
     public Task<AddToCollectionFolderResponse?> AddReleaseToCollectionFolderAsync(string username, long folderId, long releaseId,
