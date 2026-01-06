@@ -1,5 +1,12 @@
 # WIP - A helper tool to keep music or DJ collections in sync by referencing local files against the discogs user collection
 
+## Currently working on:
+
+<ul>
+    <li>Traktor collection & playlist parser</li>
+    <li>Local DataBase with full collection data</li>
+</ul>
+
 ## Planned features:
 
 <ul>
