@@ -23,6 +23,7 @@ public class DiscogsClient
         _apiClient = new DiscogsApiClient(httpClient, _authClient);
         Console.WriteLine($"Working directory: {Environment.CurrentDirectory}");
         _db = new DiscogsDbContext();
+        _db.Database.MigrateAsync().Wait();     // TODO: this should be in a proper async method
         _encryptionService = new EncryptionService();
         // ReSharper disable once JoinDeclarationAndInitializer
         ISecureStorage secureStorage;

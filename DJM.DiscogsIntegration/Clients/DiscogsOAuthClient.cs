@@ -36,6 +36,7 @@ public class DiscogsOAuthClient : IDisposable
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"{ProductName}/{ProductVersion}");
         
+        // TODO: Get initial App consumer key and secret from user, instead of expecting a env variable
         _oauthClient = new OAuthClient(
             httpClient,
             Environment.GetEnvironmentVariable("DISCOGS_CONSUMER_KEY")
